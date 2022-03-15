@@ -17,6 +17,8 @@ interface packageJson {
     private?: boolean;
     dependencies: Object;
     devDependencies: Object;
+    eslintConfig?: object;
+    browserslist?: object;
 }
 
 

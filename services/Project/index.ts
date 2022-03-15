@@ -2,14 +2,14 @@ import fs from 'fs';
 import path from 'path';
 import type { Config } from './types';
 import createPackageJson from './PackageJson';
-import { createIndexHtml, createSrcAndPublic, createIndexReact, createLogo, createAppFile, createIndexCss, createAppCss } from './createBoilerPlate';
+import { createIndexHtml, createSrcAndPublic, createIndexReact, createLogo, createAppFile, createIndexCss, createAppCss, createRecoilStore, createRouterSetup } from './createBoilerPlate';
 
 
 
 
 const createProject = async (answers: Config) => {
     try {
-        const {name, buildTools} = answers;
+        const {name, buildTools, features, template} = answers;
         fs.mkdir(name, err => {
             if (err) throw err;
             createConfig(answers);
@@ -22,6 +22,10 @@ const createProject = async (answers: Config) => {
             createAppFile(answers);
             createIndexCss(name);
             createAppCss(name);
+            if (features.includes('Recoil'))
+                createRecoilStore(name, template);
+            if (features.includes('Router'))
+                createRouterSetup(name, template, buildTools);
         });
     } catch (err) {
         throw err;
